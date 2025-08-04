@@ -30,11 +30,11 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Popular',
-          headerTitle: 'Daekho - Popular Movies',
+          title: 'Home',
+          headerTitle: 'Daekho - For You',
           tabBarIcon: ({ color, focused }) => (
             <Ionicons 
-              name={focused ? 'flame' : 'flame-outline'} 
+              name={focused ? 'home' : 'home-outline'} 
               size={24} 
               color={color} 
             />
@@ -63,6 +63,20 @@ export default function TabLayout() {
           tabBarIcon: ({ color, focused }) => (
             <Ionicons 
               name={focused ? 'play-circle' : 'play-circle-outline'} 
+              size={24} 
+              color={color} 
+            />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="profile"
+        options={{
+          title: 'Profile',
+          headerTitle: 'Your Profile',
+          tabBarIcon: ({ color, focused }) => (
+            <Ionicons 
+              name={focused ? 'person' : 'person-outline'} 
               size={24} 
               color={color} 
             />

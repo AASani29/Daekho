@@ -1,15 +1,34 @@
-# Daekho - Movie Discovery App
+# Daekho - AI-Powered Movie Recommendation App
 
-A React Native movie discovery app built with Expo, featuring popular movies, top-rated films, and now playing movies from The Movie Database (TMDB).
+A React Native movie recommendation app built with Expo, featuring personalized movie suggestions, user authentication, and cloud-based user preferences using Firebase and The Movie Database (TMDB).
 
 ## Features
 
+### 🎬 Movie Discovery
+- **Personalized Recommendations**: AI-powered suggestions based on your preferences
 - **Popular Movies**: Browse trending and popular movies
 - **Top Rated**: Discover critically acclaimed films
 - **Now Playing**: See what's currently in theaters
 - **Movie Details**: View detailed information about each movie
 - **Search**: Find specific movies by title
+
+### 🔐 User Authentication
+- **Email/Password Authentication**: Secure login and registration
+- **User Profiles**: Personalized user accounts
+- **Preference Management**: Set and update your movie preferences
+
+### 🎯 Personalization
+- **Genre Selection**: Choose your favorite movie genres during onboarding
+- **Watched Movies**: Mark movies you've already seen
+- **Liked Movies**: Save movies to your favorites
+- **Rating Preferences**: Set minimum rating thresholds
+- **Smart Recommendations**: Multiple recommendation sections based on your taste
+
+### 📱 User Experience
 - **Responsive Design**: Optimized for mobile devices with NativeWind/Tailwind CSS
+- **Onboarding Flow**: Guided setup for new users
+- **Profile Management**: View and edit your preferences
+- **Watch History**: Track your movie watching history
 
 ## Setup Instructions
 
@@ -29,15 +48,29 @@ yarn install
 4. Request an API key (it's free!)
 5. Copy your API key
 
-### 3. Configure API Key
+### 3. Configure TMDB API Key
 
-Open `services/api.ts` and replace `YOUR_TMDB_API_KEY` with your actual API key:
+Open `config/index.ts` and add your TMDB API key:
 
 ```typescript
-const API_KEY = "your_actual_api_key_here";
+export const config = {
+  tmdb: {
+    apiKey: "your_actual_tmdb_api_key_here",
+    baseUrl: "https://api.themoviedb.org/3",
+    imageBaseUrl: "https://image.tmdb.org/t/p/w500",
+  },
+};
 ```
 
-### 4. Run the App
+### 4. Set Up Firebase
+
+Follow the detailed Firebase setup guide in [FIREBASE_SETUP.md](./FIREBASE_SETUP.md) to:
+- Create a Firebase project
+- Enable Authentication (Email/Password)
+- Set up Firestore database
+- Configure your Firebase credentials
+
+### 5. Run the App
 
 ```bash
 # Start the development server
@@ -53,26 +86,68 @@ npm run android
 npm run web
 ```
 
+## App Flow
+
+### 1. Initial Launch
+- Check if TMDB API is configured
+- Check user authentication status
+- Redirect accordingly
+
+### 2. Authentication Flow
+- Login/Register with email and password
+- Firebase handles authentication securely
+
+### 3. Onboarding (First-time users)
+- **Genre Selection**: Choose favorite movie genres
+- **Movie Selection**: Mark movies you've already watched
+- Create user profile in Firestore
+
+### 4. Main App Experience
+- **Home Tab**: Personalized recommendations
+- **Top Rated Tab**: Critically acclaimed movies
+- **Now Playing Tab**: Currently in theaters
+- **Profile Tab**: User preferences and watch history
+
+### 5. Movie Interaction
+- View detailed movie information
+- Mark movies as watched
+- Like/favorite movies
+- Get similar movie recommendations
+
 ## Project Structure
 
 ```
 Daekho/
 ├── app/
-│   ├── (tabs)/           # Tab navigation screens
-│   │   ├── index.tsx     # Popular movies
-│   │   ├── toprated.tsx  # Top rated movies
-│   │   └── nowplaying.tsx # Now playing movies
+│   ├── (tabs)/              # Tab navigation screens
+│   │   ├── index.tsx        # Personalized home screen
+│   │   ├── toprated.tsx     # Top rated movies
+│   │   ├── nowplaying.tsx   # Now playing movies
+│   │   └── profile.tsx      # User profile screen
+│   ├── auth/
+│   │   └── login.tsx        # Authentication screen
+│   ├── onboarding/
+│   │   ├── genre-selection.tsx    # Genre selection
+│   │   └── movie-selection.tsx    # Movie selection
 │   ├── movie/
-│   │   └── [id].tsx      # Movie details screen
-│   ├── _layout.tsx       # Root layout
-│   └── global.css        # Global styles
+│   │   └── [id].tsx         # Movie details screen
+│   ├── _layout.tsx          # Root layout with auth provider
+│   └── global.css           # Global styles
 ├── components/
-│   ├── MovieCard.tsx     # Individual movie card
-│   ├── MovieList.tsx     # Movie list component
-│   └── SearchBar.tsx     # Search functionality
+│   ├── MovieCard.tsx        # Individual movie card
+│   ├── MovieList.tsx        # Movie list component
+│   ├── SearchBar.tsx        # Search functionality
+│   └── ErrorScreen.tsx      # Error handling component
+├── contexts/
+│   └── AuthContext.tsx      # Authentication context
 ├── services/
-│   └── api.ts           # TMDB API service
-└── assets/              # Images and fonts
+│   ├── api.ts              # TMDB API service
+│   ├── userService.ts      # User data management
+│   └── recommendationService.ts # Recommendation algorithms
+├── config/
+│   ├── index.ts            # App configuration
+│   └── firebase.ts         # Firebase configuration
+└── assets/                 # Images and fonts
 ```
 
 ## Technologies Used
@@ -80,9 +155,37 @@ Daekho/
 - **React Native** - Mobile app framework
 - **Expo** - Development platform and tools
 - **Expo Router** - File-based routing
+- **Firebase** - Authentication and database
+  - **Firebase Auth** - User authentication
+  - **Firestore** - NoSQL document database
 - **NativeWind** - Tailwind CSS for React Native
 - **TypeScript** - Type safety
 - **TMDB API** - Movie data source
+
+## Architecture
+
+### Authentication Layer
+- Firebase Authentication for secure user management
+- Context-based auth state management
+- Protected routes and screens
+
+### Data Layer
+- **TMDB API**: Movie data, search, and metadata
+- **Firestore**: User profiles, preferences, and watch history
+- **Local State**: React hooks for component state
+
+### Recommendation Engine
+- Genre-based filtering
+- User preference matching
+- Watch history analysis
+- Rating-based recommendations
+- Multiple recommendation sections
+
+### UI/UX Layer
+- NativeWind for responsive design
+- Component-based architecture
+- Consistent design system
+- Loading states and error handling
 
 ## API Endpoints Used
 

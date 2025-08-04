@@ -13,20 +13,46 @@ import {
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { movieAPI, Movie } from "../../services/api";
+import { useAuth } from "../../contexts/AuthContext";
+import { UserService } from "../../services/userService";
 
 const { width, height } = Dimensions.get("window");
 
 export default function MovieDetails() {
   const { id } = useLocalSearchParams();
   const router = useRouter();
+  const { user } = useAuth();
   const [movie, setMovie] = useState<Movie | null>(null);
   const [loading, setLoading] = useState(true);
+  const [isWatched, setIsWatched] = useState(false);
+  const [isLiked, setIsLiked] = useState(false);
+  const [addingToWatched, setAddingToWatched] = useState(false);
 
   useEffect(() => {
     if (id) {
       loadMovieDetails(Number(id));
     }
   }, [id]);
+
+  useEffect(() => {
+    if (user && movie) {
+      checkUserMovieStatus();
+    }
+  }, [user, movie]);
+
+  const checkUserMovieStatus = async () => {
+    if (!user || !movie) return;
+
+    try {
+      const userProfile = await UserService.getUserProfile(user.uid);
+      if (userProfile) {
+        setIsWatched(userProfile.watchedMovies.includes(movie.id));
+        setIsLiked(userProfile.likedMovies.includes(movie.id));
+      }
+    } catch (error) {
+      console.error('Error checking user movie status:', error);
+    }
+  };
 
   const loadMovieDetails = async (movieId: number) => {
     try {
@@ -38,6 +64,39 @@ export default function MovieDetails() {
       console.error("Error loading movie details:", error);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleMarkAsWatched = async () => {
+    if (!user || !movie) {
+      Alert.alert('Error', 'Please log in to mark movies as watched');
+      return;
+    }
+
+    setAddingToWatched(true);
+    try {
+      await UserService.addWatchedMovie(user.uid, movie.id, 8); // Default rating of 8
+      setIsWatched(true);
+      Alert.alert('Success', 'Movie added to your watched list!');
+    } catch (error) {
+      Alert.alert('Error', 'Failed to add movie to watched list');
+    } finally {
+      setAddingToWatched(false);
+    }
+  };
+
+  const handleLikeMovie = async () => {
+    if (!user || !movie) {
+      Alert.alert('Error', 'Please log in to like movies');
+      return;
+    }
+
+    try {
+      await UserService.addLikedMovie(user.uid, movie.id);
+      setIsLiked(true);
+      Alert.alert('Success', 'Movie added to your liked list!');
+    } catch (error) {
+      Alert.alert('Error', 'Failed to like movie');
     }
   };
 
@@ -145,7 +204,7 @@ export default function MovieDetails() {
               Details
             </Text>
 
-            <View className="bg-gray-50 rounded-lg p-4">
+            <View className="bg-gray-50 rounded-lg p-4 mb-6">
               <View className="flex-row justify-between items-center mb-2">
                 <Text className="text-gray-600 font-medium">Release Date</Text>
                 <Text className="text-gray-800">
@@ -165,6 +224,64 @@ export default function MovieDetails() {
                 <Text className="text-gray-800">{movie.id}</Text>
               </View>
             </View>
+
+            {/* Action Buttons */}
+            {user && (
+              <View className="flex-row space-x-3">
+                <TouchableOpacity
+                  onPress={handleMarkAsWatched}
+                  disabled={isWatched || addingToWatched}
+                  className={`flex-1 flex-row items-center justify-center py-3 rounded-lg ${
+                    isWatched
+                      ? 'bg-green-100 border border-green-300'
+                      : 'bg-blue-600'
+                  }`}
+                >
+                  <Ionicons
+                    name={isWatched ? 'checkmark-circle' : 'eye'}
+                    size={20}
+                    color={isWatched ? '#16a34a' : '#ffffff'}
+                    style={{ marginRight: 8 }}
+                  />
+                  <Text
+                    className={`font-semibold ${
+                      isWatched ? 'text-green-700' : 'text-white'
+                    }`}
+                  >
+                    {addingToWatched
+                      ? 'Adding...'
+                      : isWatched
+                      ? 'Watched'
+                      : 'Mark as Watched'
+                    }
+                  </Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                  onPress={handleLikeMovie}
+                  disabled={isLiked}
+                  className={`flex-1 flex-row items-center justify-center py-3 rounded-lg ${
+                    isLiked
+                      ? 'bg-red-100 border border-red-300'
+                      : 'bg-white border border-gray-300'
+                  }`}
+                >
+                  <Ionicons
+                    name={isLiked ? 'heart' : 'heart-outline'}
+                    size={20}
+                    color={isLiked ? '#dc2626' : '#6b7280'}
+                    style={{ marginRight: 8 }}
+                  />
+                  <Text
+                    className={`font-semibold ${
+                      isLiked ? 'text-red-700' : 'text-gray-700'
+                    }`}
+                  >
+                    {isLiked ? 'Liked' : 'Like'}
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            )}
           </View>
         </View>
       </ScrollView>

@@ -172,7 +172,74 @@ class MovieAPI {
       throw error;
     }
   }
+
+  // Get trending movies
+  async getTrendingMovies(timeWindow: 'day' | 'week' = 'week'): Promise<MoviesResponse> {
+    if (!isApiConfigured()) {
+      throw new Error('TMDB API key not configured. Please add your API key in config/index.ts');
+    }
+    
+    try {
+      const response = await fetch(
+        `${this.baseUrl}/trending/movie/${timeWindow}?api_key=${this.apiKey}`
+      );
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
+      return await response.json();
+    } catch (error) {
+      console.error('Error fetching trending movies:', error);
+      throw error;
+    }
+  }
+
+  // Get movies by genre
+  async getMoviesByGenre(genreId: number, page: number = 1): Promise<MoviesResponse> {
+    if (!isApiConfigured()) {
+      throw new Error('TMDB API key not configured. Please add your API key in config/index.ts');
+    }
+    
+    try {
+      const response = await fetch(
+        `${this.baseUrl}/discover/movie?api_key=${this.apiKey}&with_genres=${genreId}&page=${page}&sort_by=popularity.desc`
+      );
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
+      return await response.json();
+    } catch (error) {
+      console.error('Error fetching movies by genre:', error);
+      throw error;
+    }
+  }
+
+  // Get similar movies
+  async getSimilarMovies(movieId: number): Promise<MoviesResponse> {
+    if (!isApiConfigured()) {
+      throw new Error('TMDB API key not configured. Please add your API key in config/index.ts');
+    }
+    
+    try {
+      const response = await fetch(
+        `${this.baseUrl}/movie/${movieId}/similar?api_key=${this.apiKey}`
+      );
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
+      return await response.json();
+    } catch (error) {
+      console.error('Error fetching similar movies:', error);
+      throw error;
+    }
+  }
 }
 
-// Export singleton instance
+// Export class and singleton instance
+export { MovieAPI };
 export const movieAPI = new MovieAPI();
