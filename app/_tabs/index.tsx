@@ -4,7 +4,6 @@ import { useRouter } from "expo-router";
 import { movieAPI, Movie } from "../../services/api";
 import { MovieList } from "../../components/MovieList";
 import { SearchBar } from "../../components/SearchBar";
-import { ErrorScreen } from "../../components/ErrorScreen";
 
 export default function HomeTab() {
   const router = useRouter();
@@ -15,7 +14,6 @@ export default function HomeTab() {
   const [totalPages, setTotalPages] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
   const [isSearching, setIsSearching] = useState(false);
-  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     loadPopularMovies();
@@ -26,7 +24,6 @@ export default function HomeTab() {
     append: boolean = false
   ) => {
     try {
-      setError(null);
       if (!append) setLoading(true);
       else setLoadingMore(true);
 
@@ -40,10 +37,11 @@ export default function HomeTab() {
 
       setCurrentPage(response.page);
       setTotalPages(response.total_pages);
-    } catch (error: any) {
-      const errorMessage = error.message || "Failed to load movies";
-      setError(errorMessage);
-      console.error("Error loading popular movies:", error);
+    } catch (error) {
+      Alert.alert(
+        "Error",
+        "Failed to load movies. Please check your internet connection and API key."
+      );
     } finally {
       setLoading(false);
       setLoadingMore(false);
@@ -54,15 +52,14 @@ export default function HomeTab() {
     if (!query.trim()) return;
 
     try {
-      setError(null);
       setLoading(true);
       setIsSearching(true);
       const response = await movieAPI.searchMovies(query);
       setMovies(response.results);
       setCurrentPage(response.page);
       setTotalPages(response.total_pages);
-    } catch (error: any) {
-      setError(error.message || "Failed to search movies");
+    } catch (error) {
+      Alert.alert("Error", "Failed to search movies.");
     } finally {
       setLoading(false);
     }
@@ -84,7 +81,7 @@ export default function HomeTab() {
       const response = await movieAPI.searchMovies(query, page);
       setMovies((prev) => [...prev, ...response.results]);
       setCurrentPage(response.page);
-    } catch (error: any) {
+    } catch (error) {
       Alert.alert("Error", "Failed to load more search results.");
     } finally {
       setLoadingMore(false);
@@ -100,26 +97,6 @@ export default function HomeTab() {
     setIsSearching(false);
     loadPopularMovies();
   };
-
-  const handleRetry = () => {
-    if (isSearching && searchQuery) {
-      handleSearch(searchQuery);
-    } else {
-      loadPopularMovies();
-    }
-  };
-
-  // Show error screen if there's an error and no movies loaded
-  if (error && movies.length === 0) {
-    return (
-      <ErrorScreen
-        error={error}
-        onRetry={handleRetry}
-        title="Failed to Load Movies"
-        description="We couldn't load the movie data. Please check your connection and try again."
-      />
-    );
-  }
 
   return (
     <SafeAreaView className="flex-1 bg-gray-50">

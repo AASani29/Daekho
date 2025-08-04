@@ -1,50 +1,117 @@
-# Welcome to your Expo app 👋
+# Daekho - Movie Discovery App
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+A React Native movie discovery app built with Expo, featuring popular movies, top-rated films, and now playing movies from The Movie Database (TMDB).
 
-## Get started
+## Features
 
-1. Install dependencies
+- **Popular Movies**: Browse trending and popular movies
+- **Top Rated**: Discover critically acclaimed films
+- **Now Playing**: See what's currently in theaters
+- **Movie Details**: View detailed information about each movie
+- **Search**: Find specific movies by title
+- **Responsive Design**: Optimized for mobile devices with NativeWind/Tailwind CSS
 
-   ```bash
-   npm install
-   ```
+## Setup Instructions
 
-2. Start the app
-
-   ```bash
-   npx expo start
-   ```
-
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
+### 1. Install Dependencies
 
 ```bash
-npm run reset-project
+npm install
+# or
+yarn install
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+### 2. Get TMDB API Key
 
-## Learn more
+1. Go to [The Movie Database (TMDB)](https://www.themoviedb.org/)
+2. Create a free account
+3. Go to Settings → API
+4. Request an API key (it's free!)
+5. Copy your API key
 
-To learn more about developing your project with Expo, look at the following resources:
+### 3. Configure API Key
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+Open `services/api.ts` and replace `YOUR_TMDB_API_KEY` with your actual API key:
 
-## Join the community
+```typescript
+const API_KEY = "your_actual_api_key_here";
+```
 
-Join our community of developers creating universal apps.
+### 4. Run the App
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+```bash
+# Start the development server
+npm start
+
+# Run on iOS
+npm run ios
+
+# Run on Android
+npm run android
+
+# Run on web
+npm run web
+```
+
+## Project Structure
+
+```
+Daekho/
+├── app/
+│   ├── (tabs)/           # Tab navigation screens
+│   │   ├── index.tsx     # Popular movies
+│   │   ├── toprated.tsx  # Top rated movies
+│   │   └── nowplaying.tsx # Now playing movies
+│   ├── movie/
+│   │   └── [id].tsx      # Movie details screen
+│   ├── _layout.tsx       # Root layout
+│   └── global.css        # Global styles
+├── components/
+│   ├── MovieCard.tsx     # Individual movie card
+│   ├── MovieList.tsx     # Movie list component
+│   └── SearchBar.tsx     # Search functionality
+├── services/
+│   └── api.ts           # TMDB API service
+└── assets/              # Images and fonts
+```
+
+## Technologies Used
+
+- **React Native** - Mobile app framework
+- **Expo** - Development platform and tools
+- **Expo Router** - File-based routing
+- **NativeWind** - Tailwind CSS for React Native
+- **TypeScript** - Type safety
+- **TMDB API** - Movie data source
+
+## API Endpoints Used
+
+- `/movie/popular` - Popular movies
+- `/movie/top_rated` - Top rated movies
+- `/movie/now_playing` - Now playing movies
+- `/movie/{id}` - Movie details
+- `/search/movie` - Search movies
+- `/genre/movie/list` - Movie genres
+
+## Features to Add Next
+
+- [ ] Favorite movies (local storage)
+- [ ] Movie trailers
+- [ ] Actor information
+- [ ] Movie reviews
+- [ ] Offline caching
+- [ ] Push notifications
+- [ ] User ratings
+- [ ] Social sharing
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Test thoroughly
+5. Submit a pull request
+
+## License
+
+MIT License - feel free to use this project for learning and development.

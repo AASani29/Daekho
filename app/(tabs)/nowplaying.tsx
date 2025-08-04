@@ -1,0 +1,66 @@
+import React, { useState, useEffect } from 'react';
+import { View, SafeAreaView, Alert } from 'react-native';
+import { useRouter } from 'expo-router';
+import { movieAPI, Movie } from '../../services/api';
+import { MovieList } from '../../components/MovieList';
+
+export default function NowPlayingTab() {
+  const router = useRouter();
+  const [movies, setMovies] = useState<Movie[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [loadingMore, setLoadingMore] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+
+  useEffect(() => {
+    loadNowPlayingMovies();
+  }, []);
+
+  const loadNowPlayingMovies = async (page: number = 1, append: boolean = false) => {
+    try {
+      if (!append) setLoading(true);
+      else setLoadingMore(true);
+
+      const response = await movieAPI.getNowPlayingMovies(page);
+      
+      if (append) {
+        setMovies(prev => [...prev, ...response.results]);
+      } else {
+        setMovies(response.results);
+      }
+      
+      setCurrentPage(response.page);
+      setTotalPages(response.total_pages);
+    } catch (error) {
+      Alert.alert('Error', 'Failed to load now playing movies.');
+    } finally {
+      setLoading(false);
+      setLoadingMore(false);
+    }
+  };
+
+  const handleLoadMore = () => {
+    if (currentPage < totalPages && !loadingMore) {
+      loadNowPlayingMovies(currentPage + 1, true);
+    }
+  };
+
+  const handleMoviePress = (movie: Movie) => {
+    router.push(`/movie/${movie.id}` as any);
+  };
+
+  return (
+    <SafeAreaView className="flex-1 bg-gray-50">
+      <View className="flex-1">
+        <MovieList
+          movies={movies}
+          loading={loading}
+          loadingMore={loadingMore}
+          onMoviePress={handleMoviePress}
+          onEndReached={handleLoadMore}
+          title="Now Playing"
+        />
+      </View>
+    </SafeAreaView>
+  );
+}
