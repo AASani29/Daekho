@@ -5,6 +5,7 @@ A React Native movie recommendation app built with Expo, featuring personalized 
 ## Features
 
 ### 🎬 Movie Discovery
+
 - **Personalized Recommendations**: AI-powered suggestions based on your preferences
 - **Popular Movies**: Browse trending and popular movies
 - **Top Rated**: Discover critically acclaimed films
@@ -13,11 +14,13 @@ A React Native movie recommendation app built with Expo, featuring personalized 
 - **Search**: Find specific movies by title
 
 ### 🔐 User Authentication
+
 - **Email/Password Authentication**: Secure login and registration
 - **User Profiles**: Personalized user accounts
 - **Preference Management**: Set and update your movie preferences
 
 ### 🎯 Personalization
+
 - **Genre Selection**: Choose your favorite movie genres during onboarding
 - **Watched Movies**: Mark movies you've already seen
 - **Liked Movies**: Save movies to your favorites
@@ -25,6 +28,7 @@ A React Native movie recommendation app built with Expo, featuring personalized 
 - **Smart Recommendations**: Multiple recommendation sections based on your taste
 
 ### 📱 User Experience
+
 - **Responsive Design**: Optimized for mobile devices with NativeWind/Tailwind CSS
 - **Onboarding Flow**: Guided setup for new users
 - **Profile Management**: View and edit your preferences
@@ -65,6 +69,7 @@ export const config = {
 ### 4. Set Up Firebase
 
 Follow the detailed Firebase setup guide in [FIREBASE_SETUP.md](./FIREBASE_SETUP.md) to:
+
 - Create a Firebase project
 - Enable Authentication (Email/Password)
 - Set up Firestore database
@@ -89,26 +94,31 @@ npm run web
 ## App Flow
 
 ### 1. Initial Launch
+
 - Check if TMDB API is configured
 - Check user authentication status
 - Redirect accordingly
 
 ### 2. Authentication Flow
+
 - Login/Register with email and password
 - Firebase handles authentication securely
 
 ### 3. Onboarding (First-time users)
+
 - **Genre Selection**: Choose favorite movie genres
 - **Movie Selection**: Mark movies you've already watched
 - Create user profile in Firestore
 
 ### 4. Main App Experience
+
 - **Home Tab**: Personalized recommendations
 - **Top Rated Tab**: Critically acclaimed movies
 - **Now Playing Tab**: Currently in theaters
 - **Profile Tab**: User preferences and watch history
 
 ### 5. Movie Interaction
+
 - View detailed movie information
 - Mark movies as watched
 - Like/favorite movies
@@ -165,16 +175,19 @@ Daekho/
 ## Architecture
 
 ### Authentication Layer
+
 - Firebase Authentication for secure user management
 - Context-based auth state management
 - Protected routes and screens
 
 ### Data Layer
+
 - **TMDB API**: Movie data, search, and metadata
 - **Firestore**: User profiles, preferences, and watch history
 - **Local State**: React hooks for component state
 
 ### Recommendation Engine
+
 - Genre-based filtering
 - User preference matching
 - Watch history analysis
@@ -182,6 +195,7 @@ Daekho/
 - Multiple recommendation sections
 
 ### UI/UX Layer
+
 - NativeWind for responsive design
 - Component-based architecture
 - Consistent design system

@@ -1,5 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, SafeAreaView, Alert, ScrollView, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  SafeAreaView,
+  Alert,
+  ScrollView,
+  TouchableOpacity,
+  Image,
+} from "react-native";
 import { useRouter } from "expo-router";
 import { Movie, movieAPI } from "../../services/api";
 import { MovieList } from "../../components/MovieList";
@@ -7,12 +15,17 @@ import { SearchBar } from "../../components/SearchBar";
 import { ErrorScreen } from "../../components/ErrorScreen";
 import { useAuth } from "../../contexts/AuthContext";
 import { UserService } from "../../services/userService";
-import { RecommendationService, RecommendationSection } from "../../services/recommendationService";
+import {
+  RecommendationService,
+  RecommendationSection,
+} from "../../services/recommendationService";
 
 export default function HomeTab() {
   const router = useRouter();
   const { user } = useAuth();
-  const [recommendationSections, setRecommendationSections] = useState<RecommendationSection[]>([]);
+  const [recommendationSections, setRecommendationSections] = useState<
+    RecommendationSection[]
+  >([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState<Movie[]>([]);
@@ -33,20 +46,21 @@ export default function HomeTab() {
       if (!user) return;
 
       const userProfile = await UserService.getUserProfile(user.uid);
-      
+
       // If user doesn't have a profile yet, redirect to onboarding
       if (!userProfile) {
-        router.replace('/onboarding/genre-selection');
+        router.replace("/onboarding/genre-selection");
         return;
       }
 
       // If user has no preferred genres, redirect to genre selection
       if (userProfile.preferredGenres.length === 0) {
-        router.push('/onboarding/genre-selection');
+        router.push("/onboarding/genre-selection");
         return;
       }
 
-      const sections = await RecommendationService.getPersonalizedRecommendations(userProfile);
+      const sections =
+        await RecommendationService.getPersonalizedRecommendations(userProfile);
       setRecommendationSections(sections);
     } catch (error: any) {
       const errorMessage = error.message || "Failed to load recommendations";
@@ -59,7 +73,7 @@ export default function HomeTab() {
 
   const handleSearch = async (query: string) => {
     setSearchQuery(query);
-    
+
     if (query.trim() === "") {
       setSearchResults([]);
       setIsSearching(false);
@@ -93,20 +107,42 @@ export default function HomeTab() {
 
   if (loading) {
     return (
-      <SafeAreaView className="flex-1 bg-gray-50">
-        <View className="flex-1 justify-center items-center">
-          <Text className="text-lg text-gray-600">Loading your recommendations...</Text>
+      <SafeAreaView style={{ flex: 1, backgroundColor: "#111827" }}>
+        <View
+          style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+        >
+          <Text style={{ fontSize: 18, color: "#9CA3AF" }}>
+            Loading your recommendations...
+          </Text>
         </View>
       </SafeAreaView>
     );
   }
 
   return (
-    <SafeAreaView className="flex-1 bg-gray-50">
-      <View className="flex-1">
-        <View className="px-4 py-2 bg-white shadow-sm">
-          <Text className="text-2xl font-bold text-gray-800 mb-4">
-            Welcome back!
+    <SafeAreaView style={{ flex: 1, backgroundColor: "#111827" }}>
+      <View style={{ flex: 1 }}>
+        <View
+          style={{
+            paddingHorizontal: 16,
+            paddingVertical: 8,
+            backgroundColor: "#1F2937",
+            shadowColor: "#000",
+            shadowOffset: { width: 0, height: 2 },
+            shadowOpacity: 0.3,
+            shadowRadius: 4,
+            elevation: 5,
+          }}
+        >
+          <Text
+            style={{
+              fontSize: 28,
+              fontWeight: "bold",
+              color: "#F9FAFB",
+              marginBottom: 16,
+            }}
+          >
+            Welcome back! 🎬
           </Text>
           <SearchBar
             value={searchQuery}
@@ -117,10 +153,16 @@ export default function HomeTab() {
         </View>
 
         {searchQuery.trim() !== "" ? (
-          <View className="flex-1">
+          <View style={{ flex: 1, backgroundColor: "#111827" }}>
             {isSearching ? (
-              <View className="flex-1 justify-center items-center">
-                <Text className="text-gray-600">Searching...</Text>
+              <View
+                style={{
+                  flex: 1,
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <Text style={{ color: "#9CA3AF" }}>Searching...</Text>
               </View>
             ) : searchResults.length > 0 ? (
               <MovieList
@@ -130,40 +172,107 @@ export default function HomeTab() {
                 onEndReached={() => {}}
               />
             ) : (
-              <View className="flex-1 justify-center items-center">
-                <Text className="text-gray-600">No movies found for your search.</Text>
+              <View
+                style={{
+                  flex: 1,
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <Text style={{ color: "#9CA3AF" }}>
+                  No movies found for your search.
+                </Text>
               </View>
             )}
           </View>
         ) : (
-          <ScrollView className="flex-1">
+          <ScrollView style={{ flex: 1, backgroundColor: "#111827" }}>
             {recommendationSections.map((section, index) => (
-              <View key={index} className="mb-6">
-                <View className="flex-row justify-between items-center px-4 mb-3">
-                  <Text className="text-xl font-bold text-gray-800">
+              <View key={index} style={{ marginBottom: 24 }}>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    paddingHorizontal: 16,
+                    marginBottom: 12,
+                  }}
+                >
+                  <Text
+                    style={{
+                      fontSize: 22,
+                      fontWeight: "bold",
+                      color: "#F9FAFB",
+                    }}
+                  >
                     {section.title}
                   </Text>
                   {section.movies.length > 6 && (
                     <TouchableOpacity>
-                      <Text className="text-blue-600 font-medium">See All</Text>
+                      <Text style={{ color: "#F59E0B", fontWeight: "600" }}>
+                        See All
+                      </Text>
                     </TouchableOpacity>
                   )}
                 </View>
-                <ScrollView horizontal showsHorizontalScrollIndicator={false} className="px-4">
-                  <View className="flex-row">
+                <ScrollView
+                  horizontal
+                  showsHorizontalScrollIndicator={false}
+                  style={{ paddingHorizontal: 16 }}
+                >
+                  <View style={{ flexDirection: "row" }}>
                     {section.movies.slice(0, 6).map((movie) => (
                       <TouchableOpacity
                         key={movie.id}
                         onPress={() => handleMoviePress(movie)}
-                        className="mr-3 w-32"
+                        style={{ marginRight: 12, width: 140 }}
                       >
-                        <View className="bg-white rounded-lg shadow-sm">
-                          <Text className="p-2 text-sm font-medium" numberOfLines={2}>
-                            {movie.title}
-                          </Text>
-                          <Text className="px-2 pb-2 text-xs text-gray-600">
-                            ⭐ {movie.vote_average.toFixed(1)}
-                          </Text>
+                        <View
+                          style={{
+                            backgroundColor: "#1F2937",
+                            borderRadius: 12,
+                            shadowColor: "#000",
+                            shadowOffset: { width: 0, height: 4 },
+                            shadowOpacity: 0.3,
+                            shadowRadius: 8,
+                            elevation: 6,
+                            overflow: "hidden",
+                          }}
+                        >
+                          <Image
+                            source={{
+                              uri: movie.poster_path
+                                ? movieAPI.getImageUrl(movie.poster_path)
+                                : "https://via.placeholder.com/500x750/374151/9CA3AF?text=No+Image",
+                            }}
+                            style={{
+                              width: "100%",
+                              height: 180,
+                              backgroundColor: "#374151",
+                            }}
+                            resizeMode="cover"
+                          />
+                          <View style={{ padding: 8 }}>
+                            <Text
+                              style={{
+                                fontSize: 14,
+                                fontWeight: "600",
+                                color: "#F9FAFB",
+                                marginBottom: 4,
+                              }}
+                              numberOfLines={2}
+                            >
+                              {movie.title}
+                            </Text>
+                            <Text
+                              style={{
+                                fontSize: 12,
+                                color: "#F59E0B",
+                              }}
+                            >
+                              ⭐ {movie.vote_average.toFixed(1)}
+                            </Text>
+                          </View>
                         </View>
                       </TouchableOpacity>
                     ))}
@@ -173,15 +282,34 @@ export default function HomeTab() {
             ))}
 
             {recommendationSections.length === 0 && (
-              <View className="flex-1 justify-center items-center px-4">
-                <Text className="text-lg text-gray-600 text-center mb-4">
+              <View
+                style={{
+                  flex: 1,
+                  justifyContent: "center",
+                  alignItems: "center",
+                  paddingHorizontal: 16,
+                }}
+              >
+                <Text
+                  style={{
+                    fontSize: 18,
+                    color: "#9CA3AF",
+                    textAlign: "center",
+                    marginBottom: 16,
+                  }}
+                >
                   No recommendations available yet.
                 </Text>
                 <TouchableOpacity
-                  onPress={() => router.push('/onboarding/genre-selection')}
-                  className="bg-blue-600 px-6 py-3 rounded-lg"
+                  onPress={() => router.push("/onboarding/genre-selection")}
+                  style={{
+                    backgroundColor: "#F59E0B",
+                    paddingHorizontal: 24,
+                    paddingVertical: 12,
+                    borderRadius: 12,
+                  }}
                 >
-                  <Text className="text-white font-semibold">
+                  <Text style={{ color: "#1F2937", fontWeight: "600" }}>
                     Update Your Preferences
                   </Text>
                 </TouchableOpacity>

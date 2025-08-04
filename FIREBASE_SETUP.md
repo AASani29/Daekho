@@ -1,6 +1,7 @@
 # Firebase Setup for Daekho Movie Recommendation App
 
 ## Prerequisites
+
 1. A Google account
 2. Node.js installed on your machine
 3. The Firebase CLI (optional but recommended)
@@ -51,7 +52,7 @@ const firebaseConfig = {
   projectId: "your-project-id",
   storageBucket: "your-project-id.appspot.com",
   messagingSenderId: "your-messaging-sender-id",
-  appId: "your-app-id"
+  appId: "your-app-id",
 };
 ```
 
@@ -69,10 +70,10 @@ service cloud.firestore {
     match /users/{userId} {
       allow read, write: if request.auth != null && request.auth.uid == userId;
     }
-    
+
     // Users can only access their own watched movies
     match /watchedMovies/{document} {
-      allow read, write: if request.auth != null && 
+      allow read, write: if request.auth != null &&
         request.auth.uid == resource.data.userId;
     }
   }
@@ -94,6 +95,7 @@ service cloud.firestore {
 Your app will create the following collections:
 
 ### `/users/{userId}`
+
 ```json
 {
   "id": "user-id",
@@ -109,6 +111,7 @@ Your app will create the following collections:
 ```
 
 ### `/watchedMovies/{userId}_{movieId}`
+
 ```json
 {
   "movieId": 550,
@@ -134,6 +137,7 @@ Your app will create the following collections:
 ## Next Steps
 
 Once your Firebase setup is complete, you can:
+
 1. Enhance the recommendation algorithm
 2. Add more user preferences
 3. Implement push notifications

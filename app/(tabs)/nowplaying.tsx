@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { View, SafeAreaView, Alert } from 'react-native';
-import { useRouter } from 'expo-router';
-import { movieAPI, Movie } from '../../services/api';
-import { MovieList } from '../../components/MovieList';
+import React, { useState, useEffect } from "react";
+import { View, SafeAreaView, Alert } from "react-native";
+import { useRouter } from "expo-router";
+import { movieAPI, Movie } from "../../services/api";
+import { MovieList } from "../../components/MovieList";
 
 export default function NowPlayingTab() {
   const router = useRouter();
@@ -16,23 +16,26 @@ export default function NowPlayingTab() {
     loadNowPlayingMovies();
   }, []);
 
-  const loadNowPlayingMovies = async (page: number = 1, append: boolean = false) => {
+  const loadNowPlayingMovies = async (
+    page: number = 1,
+    append: boolean = false
+  ) => {
     try {
       if (!append) setLoading(true);
       else setLoadingMore(true);
 
       const response = await movieAPI.getNowPlayingMovies(page);
-      
+
       if (append) {
-        setMovies(prev => [...prev, ...response.results]);
+        setMovies((prev) => [...prev, ...response.results]);
       } else {
         setMovies(response.results);
       }
-      
+
       setCurrentPage(response.page);
       setTotalPages(response.total_pages);
     } catch (error) {
-      Alert.alert('Error', 'Failed to load now playing movies.');
+      Alert.alert("Error", "Failed to load now playing movies.");
     } finally {
       setLoading(false);
       setLoadingMore(false);
@@ -50,8 +53,8 @@ export default function NowPlayingTab() {
   };
 
   return (
-    <SafeAreaView className="flex-1 bg-gray-50">
-      <View className="flex-1">
+    <SafeAreaView style={{ flex: 1, backgroundColor: "#111827" }}>
+      <View style={{ flex: 1 }}>
         <MovieList
           movies={movies}
           loading={loading}

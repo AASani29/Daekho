@@ -42,27 +42,55 @@ export const SearchBar: React.FC<SearchBarProps> = ({
   };
 
   return (
-    <View className="flex-row items-center bg-gray-100 rounded-lg mx-4 mb-4 px-3 py-2">
-      <Ionicons name="search-outline" size={20} color="#666" />
+    <View
+      style={{
+        flexDirection: "row",
+        alignItems: "center",
+        backgroundColor: "#374151",
+        borderRadius: 12,
+        paddingHorizontal: 12,
+        paddingVertical: 8,
+      }}
+    >
+      <Ionicons name="search-outline" size={20} color="#9CA3AF" />
       <TextInput
-        className="flex-1 ml-3 text-base text-gray-800"
+        style={{
+          flex: 1,
+          marginLeft: 12,
+          fontSize: 16,
+          color: "#F9FAFB",
+        }}
         placeholder={placeholder}
-        placeholderTextColor="#999"
+        placeholderTextColor="#6B7280"
         value={searchValue}
         onChangeText={handleChangeText}
         onSubmitEditing={handleSearch}
         returnKeyType="search"
       />
       {searchValue.length > 0 && (
-        <TouchableOpacity onPress={handleClear} className="ml-2">
-          <Ionicons name="close-circle" size={20} color="#666" />
+        <TouchableOpacity onPress={handleClear} style={{ marginLeft: 8 }}>
+          <Ionicons name="close-circle" size={20} color="#9CA3AF" />
         </TouchableOpacity>
       )}
       <TouchableOpacity
         onPress={handleSearch}
-        className="ml-2 bg-blue-500 px-3 py-1 rounded"
+        style={{
+          marginLeft: 8,
+          backgroundColor: "#F59E0B",
+          paddingHorizontal: 12,
+          paddingVertical: 4,
+          borderRadius: 8,
+        }}
       >
-        <Text className="text-white text-sm font-medium">Search</Text>
+        <Text
+          style={{
+            color: "#1F2937",
+            fontSize: 14,
+            fontWeight: "600",
+          }}
+        >
+          Search
+        </Text>
       </TouchableOpacity>
     </View>
   );

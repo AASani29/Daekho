@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -6,11 +6,11 @@ import {
   ScrollView,
   ActivityIndicator,
   Alert,
-} from 'react-native';
-import { useRouter } from 'expo-router';
-import { useAuth } from '../../contexts/AuthContext';
-import { movieAPI, Genre } from '../../services/api';
-import { UserService } from '../../services/userService';
+} from "react-native";
+import { useRouter } from "expo-router";
+import { useAuth } from "../../contexts/AuthContext";
+import { movieAPI, Genre } from "../../services/api";
+import { UserService } from "../../services/userService";
 
 export default function GenreSelectionScreen() {
   const [genres, setGenres] = useState<Genre[]>([]);
@@ -29,16 +29,16 @@ export default function GenreSelectionScreen() {
       const genreData = await movieAPI.getGenres();
       setGenres(genreData);
     } catch (error) {
-      Alert.alert('Error', 'Failed to load genres');
+      Alert.alert("Error", "Failed to load genres");
     } finally {
       setLoading(false);
     }
   };
 
   const toggleGenre = (genreId: number) => {
-    setSelectedGenres(prev => {
+    setSelectedGenres((prev) => {
       if (prev.includes(genreId)) {
-        return prev.filter(id => id !== genreId);
+        return prev.filter((id) => id !== genreId);
       } else {
         return [...prev, genreId];
       }
@@ -47,12 +47,12 @@ export default function GenreSelectionScreen() {
 
   const handleContinue = async () => {
     if (selectedGenres.length === 0) {
-      Alert.alert('Please select at least one genre');
+      Alert.alert("Please select at least one genre");
       return;
     }
 
     if (!user) {
-      Alert.alert('Error', 'User not authenticated');
+      Alert.alert("Error", "User not authenticated");
       return;
     }
 
@@ -60,9 +60,9 @@ export default function GenreSelectionScreen() {
     try {
       // Check if user profile exists, if not create it
       let userProfile = await UserService.getUserProfile(user.uid);
-      
+
       if (!userProfile) {
-        await UserService.createUserProfile(user.uid, user.email || '', {
+        await UserService.createUserProfile(user.uid, user.email || "", {
           preferredGenres: selectedGenres,
         });
       } else {
@@ -70,9 +70,9 @@ export default function GenreSelectionScreen() {
       }
 
       // Navigate to movie selection
-      router.push('/(tabs)'); // For now, go directly to main app
+      router.push("/(tabs)"); // For now, go directly to main app
     } catch (error) {
-      Alert.alert('Error', 'Failed to save preferences');
+      Alert.alert("Error", "Failed to save preferences");
     } finally {
       setSaving(false);
     }
@@ -80,40 +80,81 @@ export default function GenreSelectionScreen() {
 
   if (loading) {
     return (
-      <View className="flex-1 justify-center items-center bg-gray-50">
-        <ActivityIndicator size="large" color="#3b82f6" />
-        <Text className="mt-4 text-lg text-gray-600">Loading genres...</Text>
+      <View
+        style={{
+          flex: 1,
+          justifyContent: "center",
+          alignItems: "center",
+          backgroundColor: "#111827",
+        }}
+      >
+        <ActivityIndicator size="large" color="#F59E0B" />
+        <Text style={{ marginTop: 16, fontSize: 18, color: "#9CA3AF" }}>
+          Loading genres...
+        </Text>
       </View>
     );
   }
 
   return (
-    <View className="flex-1 bg-gray-50">
-      <ScrollView className="flex-1 px-6 pt-12">
-        <Text className="text-3xl font-bold text-center mb-4 text-gray-800">
-          Choose Your Favorite Genres
+    <View style={{ flex: 1, backgroundColor: "#111827" }}>
+      <ScrollView style={{ flex: 1, paddingHorizontal: 24, paddingTop: 48 }}>
+        <Text
+          style={{
+            fontSize: 32,
+            fontWeight: "bold",
+            textAlign: "center",
+            marginBottom: 16,
+            color: "#F9FAFB",
+          }}
+        >
+          🎭 Choose Your Favorite Genres
         </Text>
-        <Text className="text-gray-600 text-center mb-8">
-          Select the movie genres you enjoy most. This helps us recommend movies you'll love.
+        <Text
+          style={{
+            color: "#9CA3AF",
+            textAlign: "center",
+            marginBottom: 32,
+            fontSize: 16,
+          }}
+        >
+          Select the movie genres you enjoy most. This helps us recommend movies
+          you'll love.
         </Text>
 
-        <View className="flex-row flex-wrap justify-center">
+        <View
+          style={{
+            flexDirection: "row",
+            flexWrap: "wrap",
+            justifyContent: "center",
+          }}
+        >
           {genres.map((genre) => (
             <TouchableOpacity
               key={genre.id}
               onPress={() => toggleGenre(genre.id)}
-              className={`m-2 px-4 py-2 rounded-full border-2 ${
-                selectedGenres.includes(genre.id)
-                  ? 'bg-blue-600 border-blue-600'
-                  : 'bg-white border-gray-300'
-              }`}
+              style={{
+                margin: 8,
+                paddingHorizontal: 16,
+                paddingVertical: 8,
+                borderRadius: 25,
+                borderWidth: 2,
+                borderColor: selectedGenres.includes(genre.id)
+                  ? "#F59E0B"
+                  : "#374151",
+                backgroundColor: selectedGenres.includes(genre.id)
+                  ? "#F59E0B"
+                  : "#1F2937",
+              }}
             >
               <Text
-                className={`text-center font-medium ${
-                  selectedGenres.includes(genre.id)
-                    ? 'text-white'
-                    : 'text-gray-700'
-                }`}
+                style={{
+                  textAlign: "center",
+                  fontWeight: "600",
+                  color: selectedGenres.includes(genre.id)
+                    ? "#1F2937"
+                    : "#F9FAFB",
+                }}
               >
                 {genre.name}
               </Text>
@@ -122,21 +163,40 @@ export default function GenreSelectionScreen() {
         </View>
       </ScrollView>
 
-      <View className="px-6 pb-6 bg-white">
-        <Text className="text-center text-gray-600 mb-4">
-          Selected: {selectedGenres.length} genre{selectedGenres.length !== 1 ? 's' : ''}
+      <View
+        style={{
+          paddingHorizontal: 24,
+          paddingBottom: 24,
+          backgroundColor: "#1F2937",
+          paddingTop: 16,
+        }}
+      >
+        <Text
+          style={{ textAlign: "center", color: "#9CA3AF", marginBottom: 16 }}
+        >
+          Selected: {selectedGenres.length} genre
+          {selectedGenres.length !== 1 ? "s" : ""}
         </Text>
         <TouchableOpacity
           onPress={handleContinue}
           disabled={saving || selectedGenres.length === 0}
-          className={`rounded-lg py-3 ${
-            saving || selectedGenres.length === 0
-              ? 'bg-gray-400'
-              : 'bg-blue-600'
-          }`}
+          style={{
+            borderRadius: 12,
+            paddingVertical: 14,
+            backgroundColor:
+              saving || selectedGenres.length === 0 ? "#6B7280" : "#F59E0B",
+          }}
         >
-          <Text className="text-white text-center font-semibold text-lg">
-            {saving ? 'Saving...' : 'Continue'}
+          <Text
+            style={{
+              color:
+                saving || selectedGenres.length === 0 ? "#D1D5DB" : "#1F2937",
+              textAlign: "center",
+              fontWeight: "700",
+              fontSize: 18,
+            }}
+          >
+            {saving ? "Saving..." : "🚀 Continue"}
           </Text>
         </TouchableOpacity>
       </View>

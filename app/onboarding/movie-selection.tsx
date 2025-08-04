@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -7,12 +7,12 @@ import {
   ActivityIndicator,
   Alert,
   Image,
-} from 'react-native';
-import { useRouter } from 'expo-router';
-import { useAuth } from '../../contexts/AuthContext';
-import { Movie, movieAPI } from '../../services/api';
-import { UserService } from '../../services/userService';
-import { RecommendationService } from '../../services/recommendationService';
+} from "react-native";
+import { useRouter } from "expo-router";
+import { useAuth } from "../../contexts/AuthContext";
+import { Movie, movieAPI } from "../../services/api";
+import { UserService } from "../../services/userService";
+import { RecommendationService } from "../../services/recommendationService";
 
 export default function MovieSelectionScreen() {
   const [movies, setMovies] = useState<Movie[]>([]);
@@ -41,22 +41,22 @@ export default function MovieSelectionScreen() {
           userProfile.preferredGenres.slice(0, 3)
         );
         const allMovies: Movie[] = [];
-        Object.values(genreMovies).forEach(movieList => {
+        Object.values(genreMovies).forEach((movieList) => {
           allMovies.push(...movieList);
         });
         setMovies(allMovies.slice(0, 30));
       }
     } catch (error) {
-      Alert.alert('Error', 'Failed to load movies');
+      Alert.alert("Error", "Failed to load movies");
     } finally {
       setLoading(false);
     }
   };
 
   const toggleMovie = (movieId: number) => {
-    setSelectedMovies(prev => {
+    setSelectedMovies((prev) => {
       if (prev.includes(movieId)) {
-        return prev.filter(id => id !== movieId);
+        return prev.filter((id) => id !== movieId);
       } else {
         return [...prev, movieId];
       }
@@ -65,7 +65,7 @@ export default function MovieSelectionScreen() {
 
   const handleContinue = async () => {
     if (!user) {
-      Alert.alert('Error', 'User not authenticated');
+      Alert.alert("Error", "User not authenticated");
       return;
     }
 
@@ -77,16 +77,16 @@ export default function MovieSelectionScreen() {
       }
 
       // Navigate to main app
-      router.replace('/(tabs)');
+      router.replace("/(tabs)");
     } catch (error) {
-      Alert.alert('Error', 'Failed to save movie selections');
+      Alert.alert("Error", "Failed to save movie selections");
     } finally {
       setSaving(false);
     }
   };
 
   const handleSkip = () => {
-    router.replace('/(tabs)');
+    router.replace("/(tabs)");
   };
 
   if (loading) {
@@ -105,7 +105,8 @@ export default function MovieSelectionScreen() {
           Movies You've Watched
         </Text>
         <Text className="text-gray-600 text-center mb-8">
-          Select movies you've already seen. This helps us understand your taste better.
+          Select movies you've already seen. This helps us understand your taste
+          better.
         </Text>
 
         <View className="flex-row flex-wrap justify-between">
@@ -114,7 +115,7 @@ export default function MovieSelectionScreen() {
               key={movie.id}
               onPress={() => toggleMovie(movie.id)}
               className={`w-[48%] mb-4 rounded-lg overflow-hidden ${
-                selectedMovies.includes(movie.id) ? 'ring-2 ring-blue-600' : ''
+                selectedMovies.includes(movie.id) ? "ring-2 ring-blue-600" : ""
               }`}
             >
               <View className="relative">
@@ -130,7 +131,10 @@ export default function MovieSelectionScreen() {
                 )}
               </View>
               <View className="p-2 bg-white">
-                <Text className="text-sm font-medium text-gray-800" numberOfLines={2}>
+                <Text
+                  className="text-sm font-medium text-gray-800"
+                  numberOfLines={2}
+                >
                   {movie.title}
                 </Text>
                 <Text className="text-xs text-gray-600">
@@ -144,24 +148,27 @@ export default function MovieSelectionScreen() {
 
       <View className="px-6 pb-6 bg-white">
         <Text className="text-center text-gray-600 mb-4">
-          Selected: {selectedMovies.length} movie{selectedMovies.length !== 1 ? 's' : ''}
+          Selected: {selectedMovies.length} movie
+          {selectedMovies.length !== 1 ? "s" : ""}
         </Text>
         <View className="flex-row space-x-3">
           <TouchableOpacity
             onPress={handleSkip}
             className="flex-1 rounded-lg py-3 border border-gray-300"
           >
-            <Text className="text-gray-700 text-center font-semibold">Skip</Text>
+            <Text className="text-gray-700 text-center font-semibold">
+              Skip
+            </Text>
           </TouchableOpacity>
           <TouchableOpacity
             onPress={handleContinue}
             disabled={saving}
             className={`flex-1 rounded-lg py-3 ${
-              saving ? 'bg-gray-400' : 'bg-blue-600'
+              saving ? "bg-gray-400" : "bg-blue-600"
             }`}
           >
             <Text className="text-white text-center font-semibold">
-              {saving ? 'Saving...' : 'Continue'}
+              {saving ? "Saving..." : "Continue"}
             </Text>
           </TouchableOpacity>
         </View>

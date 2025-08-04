@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -8,13 +8,13 @@ import {
   KeyboardAvoidingView,
   Platform,
   ScrollView,
-} from 'react-native';
-import { useRouter } from 'expo-router';
-import { useAuth } from '../../contexts/AuthContext';
+} from "react-native";
+import { useRouter } from "expo-router";
+import { useAuth } from "../../contexts/AuthContext";
 
 export default function LoginScreen() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [isLogin, setIsLogin] = useState(true);
   const [loading, setLoading] = useState(false);
   const { signIn, signUp } = useAuth();
@@ -22,90 +22,102 @@ export default function LoginScreen() {
 
   const handleSubmit = async () => {
     if (!email || !password) {
-      Alert.alert('Error', 'Please fill in all fields');
+      Alert.alert("Error", "Please fill in all fields");
       return;
     }
 
-    console.log('Attempting to sign in with:', email);
+    console.log("Attempting to sign in with:", email);
     setLoading(true);
     try {
       if (isLogin) {
-        console.log('Calling signIn...');
+        console.log("Calling signIn...");
         await signIn(email, password);
-        console.log('SignIn successful');
+        console.log("SignIn successful");
         // Add a small delay and then manually navigate
         setTimeout(() => {
-          console.log('Manually navigating after successful sign in...');
-          router.replace('/');
+          console.log("Manually navigating after successful sign in...");
+          router.replace("/");
         }, 1000);
       } else {
-        console.log('Calling signUp...');
+        console.log("Calling signUp...");
         await signUp(email, password);
-        console.log('SignUp successful');
+        console.log("SignUp successful");
         // Add a small delay and then manually navigate
         setTimeout(() => {
-          console.log('Manually navigating after successful sign up...');
-          router.replace('/');
+          console.log("Manually navigating after successful sign up...");
+          router.replace("/");
         }, 1000);
       }
     } catch (error: any) {
-      console.error('Auth error:', error);
-      Alert.alert('Error', error.message || 'An error occurred');
+      console.error("Auth error:", error);
+      Alert.alert("Error", error.message || "An error occurred");
     } finally {
       setLoading(false);
     }
   };
 
   const handleManualNavigation = () => {
-    console.log('Manual navigation button pressed');
-    router.replace('/');
+    console.log("Manual navigation button pressed");
+    router.replace("/");
   };
 
   return (
-    <KeyboardAvoidingView 
-      style={{ flex: 1 }} 
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+    <KeyboardAvoidingView
+      style={{ flex: 1 }}
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
     >
       <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-        <View style={{ 
-          flex: 1, 
-          justifyContent: 'center', 
-          paddingHorizontal: 24, 
-          backgroundColor: '#F9FAFB' 
-        }}>
-          <View style={{ 
-            backgroundColor: 'white', 
-            borderRadius: 8, 
-            padding: 24, 
-            shadowColor: '#000',
-            shadowOffset: { width: 0, height: 2 },
-            shadowOpacity: 0.1,
-            shadowRadius: 4,
-            elevation: 3,
-          }}>
-            <Text style={{ 
-              fontSize: 30, 
-              fontWeight: 'bold', 
-              textAlign: 'center', 
-              marginBottom: 32, 
-              color: '#1F2937' 
-            }}>
-              {isLogin ? 'Welcome Back' : 'Create Account'}
+        <View
+          style={{
+            flex: 1,
+            justifyContent: "center",
+            paddingHorizontal: 24,
+            backgroundColor: "#111827",
+          }}
+        >
+          <View
+            style={{
+              backgroundColor: "#1F2937",
+              borderRadius: 16,
+              padding: 24,
+              shadowColor: "#000",
+              shadowOffset: { width: 0, height: 8 },
+              shadowOpacity: 0.3,
+              shadowRadius: 16,
+              elevation: 8,
+            }}
+          >
+            <Text
+              style={{
+                fontSize: 32,
+                fontWeight: "bold",
+                textAlign: "center",
+                marginBottom: 32,
+                color: "#F9FAFB",
+              }}
+            >
+              {isLogin ? "🎬 Welcome Back" : "🚀 Create Account"}
             </Text>
-            
+
             <View style={{ marginBottom: 16 }}>
-              <Text style={{ color: '#374151', marginBottom: 8, fontWeight: '500' }}>Email</Text>
+              <Text
+                style={{ color: "#F9FAFB", marginBottom: 8, fontWeight: "600" }}
+              >
+                Email
+              </Text>
               <TextInput
                 style={{
                   borderWidth: 1,
-                  borderColor: '#D1D5DB',
-                  borderRadius: 8,
+                  borderColor: "#374151",
+                  borderRadius: 12,
                   paddingHorizontal: 16,
                   paddingVertical: 12,
-                  backgroundColor: 'white',
+                  backgroundColor: "#374151",
                   fontSize: 16,
+                  color: "#F9FAFB",
                 }}
                 placeholder="Enter your email"
+                placeholderTextColor="#9CA3AF"
                 value={email}
                 onChangeText={setEmail}
                 keyboardType="email-address"
@@ -115,18 +127,24 @@ export default function LoginScreen() {
             </View>
 
             <View style={{ marginBottom: 24 }}>
-              <Text style={{ color: '#374151', marginBottom: 8, fontWeight: '500' }}>Password</Text>
+              <Text
+                style={{ color: "#F9FAFB", marginBottom: 8, fontWeight: "600" }}
+              >
+                Password
+              </Text>
               <TextInput
                 style={{
                   borderWidth: 1,
-                  borderColor: '#D1D5DB',
-                  borderRadius: 8,
+                  borderColor: "#374151",
+                  borderRadius: 12,
                   paddingHorizontal: 16,
                   paddingVertical: 12,
-                  backgroundColor: 'white',
+                  backgroundColor: "#374151",
                   fontSize: 16,
+                  color: "#F9FAFB",
                 }}
                 placeholder="Enter your password"
+                placeholderTextColor="#9CA3AF"
                 value={password}
                 onChangeText={setPassword}
                 secureTextEntry
@@ -136,21 +154,27 @@ export default function LoginScreen() {
 
             <TouchableOpacity
               style={{
-                backgroundColor: loading ? '#9CA3AF' : '#2563EB',
-                paddingVertical: 12,
-                borderRadius: 8,
+                backgroundColor: loading ? "#6B7280" : "#F59E0B",
+                paddingVertical: 14,
+                borderRadius: 12,
                 marginBottom: 16,
               }}
               onPress={handleSubmit}
               disabled={loading}
             >
-              <Text style={{
-                color: 'white',
-                textAlign: 'center',
-                fontWeight: '600',
-                fontSize: 18,
-              }}>
-                {loading ? 'Please wait...' : (isLogin ? 'Sign In' : 'Sign Up')}
+              <Text
+                style={{
+                  color: loading ? "#D1D5DB" : "#1F2937",
+                  textAlign: "center",
+                  fontWeight: "700",
+                  fontSize: 18,
+                }}
+              >
+                {loading
+                  ? "Please wait..."
+                  : isLogin
+                  ? "🎬 Sign In"
+                  : "🚀 Sign Up"}
               </Text>
             </TouchableOpacity>
 
@@ -158,30 +182,16 @@ export default function LoginScreen() {
               style={{ paddingVertical: 8 }}
               onPress={() => setIsLogin(!isLogin)}
             >
-              <Text style={{ color: '#2563EB', textAlign: 'center' }}>
-                {isLogin 
-                  ? "Don't have an account? Sign up" 
-                  : "Already have an account? Sign in"
-                }
-              </Text>
-            </TouchableOpacity>
-
-            {/* Manual navigation button for debugging */}
-            <TouchableOpacity
-              style={{
-                backgroundColor: '#10B981',
-                paddingVertical: 8,
-                borderRadius: 8,
-                marginTop: 16,
-              }}
-              onPress={handleManualNavigation}
-            >
-              <Text style={{
-                color: 'white',
-                textAlign: 'center',
-                fontWeight: '500',
-              }}>
-                Go to App (Debug)
+              <Text
+                style={{
+                  color: "#F59E0B",
+                  textAlign: "center",
+                  fontWeight: "600",
+                }}
+              >
+                {isLogin
+                  ? "Don't have an account? Sign up"
+                  : "Already have an account? Sign in"}
               </Text>
             </TouchableOpacity>
           </View>

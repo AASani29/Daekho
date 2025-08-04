@@ -27,25 +27,42 @@ export const MovieList: React.FC<MovieListProps> = ({
   const renderFooter = () => {
     if (!loadingMore) return null;
     return (
-      <View className="py-4">
-        <ActivityIndicator size="small" color="#0000ff" />
+      <View style={{ paddingVertical: 16 }}>
+        <ActivityIndicator size="small" color="#F59E0B" />
       </View>
     );
   };
 
   if (loading && movies.length === 0) {
     return (
-      <View className="flex-1 justify-center items-center">
-        <ActivityIndicator size="large" color="#0000ff" />
-        <Text className="mt-2 text-gray-600">Loading movies...</Text>
+      <View
+        style={{
+          flex: 1,
+          justifyContent: "center",
+          alignItems: "center",
+          backgroundColor: "#111827",
+        }}
+      >
+        <ActivityIndicator size="large" color="#F59E0B" />
+        <Text style={{ marginTop: 8, color: "#9CA3AF" }}>
+          Loading movies...
+        </Text>
       </View>
     );
   }
 
   return (
-    <View className="flex-1">
+    <View style={{ flex: 1, backgroundColor: "#111827" }}>
       {title && (
-        <Text className="text-2xl font-bold text-gray-800 mb-4 px-4">
+        <Text
+          style={{
+            fontSize: 24,
+            fontWeight: "bold",
+            color: "#F9FAFB",
+            marginBottom: 16,
+            paddingHorizontal: 16,
+          }}
+        >
           {title}
         </Text>
       )}

@@ -18,51 +18,149 @@ export const ErrorScreen: React.FC<ErrorBoundaryProps> = ({
   description = "We encountered an error while loading the content.",
 }) => {
   return (
-    <SafeAreaView className="flex-1 bg-gray-50">
-      <View className="flex-1 justify-center items-center px-6">
-        <View className="items-center mb-8">
-          <View className="w-20 h-20 bg-red-100 rounded-full items-center justify-center mb-4">
-            <Ionicons name="alert-circle-outline" size={40} color="#dc2626" />
+    <SafeAreaView style={{ flex: 1, backgroundColor: "#111827" }}>
+      <View
+        style={{
+          flex: 1,
+          justifyContent: "center",
+          alignItems: "center",
+          paddingHorizontal: 24,
+        }}
+      >
+        <View style={{ alignItems: "center", marginBottom: 32 }}>
+          <View
+            style={{
+              width: 80,
+              height: 80,
+              backgroundColor: "#DC2626",
+              borderRadius: 40,
+              alignItems: "center",
+              justifyContent: "center",
+              marginBottom: 16,
+            }}
+          >
+            <Ionicons name="alert-circle-outline" size={40} color="#F9FAFB" />
           </View>
 
-          <Text className="text-2xl font-bold text-gray-800 mb-2 text-center">
+          <Text
+            style={{
+              fontSize: 28,
+              fontWeight: "bold",
+              color: "#F9FAFB",
+              marginBottom: 8,
+              textAlign: "center",
+            }}
+          >
             {title}
           </Text>
 
-          <Text className="text-gray-600 text-center mb-4">{description}</Text>
+          <Text
+            style={{
+              color: "#9CA3AF",
+              textAlign: "center",
+              marginBottom: 16,
+              fontSize: 16,
+            }}
+          >
+            {description}
+          </Text>
 
           {error && (
-            <View className="bg-red-50 border border-red-200 rounded-lg p-3 mb-6">
-              <Text className="text-red-700 text-sm text-center">{error}</Text>
+            <View
+              style={{
+                backgroundColor: "#1F2937",
+                borderWidth: 1,
+                borderColor: "#DC2626",
+                borderRadius: 12,
+                padding: 12,
+                marginBottom: 24,
+              }}
+            >
+              <Text
+                style={{
+                  color: "#FCA5A5",
+                  fontSize: 14,
+                  textAlign: "center",
+                }}
+              >
+                {error}
+              </Text>
             </View>
           )}
         </View>
 
-        <View className="w-full space-y-3">
+        <View style={{ width: "100%", gap: 12 }}>
           {onRetry && (
             <TouchableOpacity
               onPress={onRetry}
-              className="bg-blue-500 py-3 px-6 rounded-lg flex-row items-center justify-center"
+              style={{
+                backgroundColor: "#F59E0B",
+                paddingVertical: 12,
+                paddingHorizontal: 24,
+                borderRadius: 12,
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
             >
-              <Ionicons name="refresh-outline" size={20} color="white" />
-              <Text className="text-white font-medium ml-2">Try Again</Text>
+              <Ionicons name="refresh-outline" size={20} color="#1F2937" />
+              <Text
+                style={{
+                  color: "#1F2937",
+                  fontWeight: "600",
+                  marginLeft: 8,
+                }}
+              >
+                Try Again
+              </Text>
             </TouchableOpacity>
           )}
 
           {onGoBack && (
             <TouchableOpacity
               onPress={onGoBack}
-              className="bg-gray-200 py-3 px-6 rounded-lg flex-row items-center justify-center"
+              style={{
+                backgroundColor: "#374151",
+                paddingVertical: 12,
+                paddingHorizontal: 24,
+                borderRadius: 12,
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
             >
-              <Ionicons name="arrow-back-outline" size={20} color="#374151" />
-              <Text className="text-gray-700 font-medium ml-2">Go Back</Text>
+              <Ionicons name="arrow-back-outline" size={20} color="#F9FAFB" />
+              <Text
+                style={{
+                  color: "#F9FAFB",
+                  fontWeight: "600",
+                  marginLeft: 8,
+                }}
+              >
+                Go Back
+              </Text>
             </TouchableOpacity>
           )}
         </View>
 
         {/* API Key Hint */}
-        <View className="mt-8 bg-amber-50 border border-amber-200 rounded-lg p-4">
-          <Text className="text-amber-800 text-sm text-center">
+        <View
+          style={{
+            marginTop: 32,
+            backgroundColor: "#1F2937",
+            borderWidth: 1,
+            borderColor: "#F59E0B",
+            borderRadius: 12,
+            padding: 16,
+          }}
+        >
+          <Text
+            style={{
+              color: "#F59E0B",
+              fontSize: 14,
+              textAlign: "center",
+            }}
+          >
             💡 If you're seeing API errors, make sure you've configured your
             TMDB API key in config/index.ts
           </Text>
