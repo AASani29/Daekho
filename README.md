@@ -52,18 +52,26 @@ yarn install
 4. Request an API key (it's free!)
 5. Copy your API key
 
-### 3. Configure TMDB API Key
+### 3. Configure Environment Variables
 
-Open `config/index.ts` and add your TMDB API key:
+1. Copy the `.env.example` file to `.env`:
+```bash
+cp .env.example .env
+```
 
-```typescript
-export const config = {
-  tmdb: {
-    apiKey: "your_actual_tmdb_api_key_here",
-    baseUrl: "https://api.themoviedb.org/3",
-    imageBaseUrl: "https://image.tmdb.org/t/p/w500",
-  },
-};
+2. Open `.env` and add your actual credentials:
+
+```bash
+# TMDB API Configuration
+TMDB_API_KEY=your_actual_tmdb_api_key_here
+
+# Firebase Configuration (from your Firebase project settings)
+FIREBASE_API_KEY=your_firebase_api_key_here
+FIREBASE_AUTH_DOMAIN=your_project_id.firebaseapp.com
+FIREBASE_PROJECT_ID=your_project_id
+FIREBASE_STORAGE_BUCKET=your_project_id.firebasestorage.app
+FIREBASE_MESSAGING_SENDER_ID=your_messaging_sender_id
+FIREBASE_APP_ID=your_app_id
 ```
 
 ### 4. Set Up Firebase
@@ -73,7 +81,7 @@ Follow the detailed Firebase setup guide in [FIREBASE_SETUP.md](./FIREBASE_SETUP
 - Create a Firebase project
 - Enable Authentication (Email/Password)
 - Set up Firestore database
-- Configure your Firebase credentials
+- Get your Firebase credentials for the `.env` file
 
 ### 5. Run the App
 

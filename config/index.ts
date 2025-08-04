@@ -1,11 +1,13 @@
 // Configuration file for the Daekho app
 // This file helps manage app settings and configurations
 
+import Constants from 'expo-constants';
+
 export const config = {
   // TMDB API Configuration
   tmdb: {
-    // Get your free API key from: https://www.themoviedb.org/settings/api
-    apiKey: 'f03c1dc8d601c279c2b739ac021684c4', // Replace with your actual API key
+    // API key is now loaded from environment variables
+    apiKey: Constants.expoConfig?.extra?.tmdbApiKey || '',
     baseUrl: 'https://api.themoviedb.org/3',
     imageBaseUrl: 'https://image.tmdb.org/t/p/w500',
   },
@@ -40,7 +42,7 @@ export const config = {
 
 // Helper function to check if API key is configured
 export const isApiConfigured = (): boolean => {
-  return config.tmdb.apiKey !== 'YOUR_TMDB_API_KEY' && config.tmdb.apiKey.length > 0;
+  return !!(config.tmdb.apiKey && config.tmdb.apiKey.length > 0 && config.tmdb.apiKey !== 'YOUR_TMDB_API_KEY');
 };
 
 // Helper function to get environment-specific configuration

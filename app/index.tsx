@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { View, Text, ActivityIndicator, TouchableOpacity } from "react-native";
 import { useRouter } from "expo-router";
-import { isApiConfigured } from "../config";
+import { isApiConfigured, config } from "../config";
 import { useAuth } from "../contexts/AuthContext";
 
 export default function Index() {
@@ -9,6 +9,10 @@ export default function Index() {
   const { user, loading } = useAuth();
 
   useEffect(() => {
+    // Debug environment variables
+    console.log("Debug: TMDB API Key length:", config.tmdb.apiKey?.length || 0);
+    console.log("Debug: API configured:", isApiConfigured());
+    
     console.log(
       "Index: Auth loading:",
       loading,

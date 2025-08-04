@@ -1,16 +1,17 @@
 import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
+import Constants from 'expo-constants';
 
 // Firebase configuration
-// Replace with your Firebase project config
+// Credentials are now loaded from environment variables
 const firebaseConfig = {
-  apiKey: "AIzaSyC3hZVg-wuTq7F6AKyei-7hyAoXZqstdUA",
-  authDomain: "daekho-553a9.firebaseapp.com",
-  projectId: "daekho-553a9",
-  storageBucket: "daekho-553a9.firebasestorage.app",
-  messagingSenderId: "813896712651",
-  appId: "1:813896712651:web:63a0672f9f55b2912bb64e"
+  apiKey: Constants.expoConfig?.extra?.firebaseApiKey || '',
+  authDomain: Constants.expoConfig?.extra?.firebaseAuthDomain || '',
+  projectId: Constants.expoConfig?.extra?.firebaseProjectId || '',
+  storageBucket: Constants.expoConfig?.extra?.firebaseStorageBucket || '',
+  messagingSenderId: Constants.expoConfig?.extra?.firebaseMessagingSenderId || '',
+  appId: Constants.expoConfig?.extra?.firebaseAppId || ''
 };
 
 // Initialize Firebase
