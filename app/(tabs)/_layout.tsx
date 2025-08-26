@@ -1,5 +1,5 @@
-import { Tabs } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
+import { Tabs } from "expo-router";
 
 export default function TabLayout() {
   return (
@@ -13,6 +13,7 @@ export default function TabLayout() {
           borderTopColor: "#374151",
           paddingBottom: 5,
           paddingTop: 5,
+          marginBottom: 15,
           height: 60,
         },
         headerStyle: {
@@ -62,7 +63,7 @@ export default function TabLayout() {
           headerTitle: "Now Playing",
           tabBarIcon: ({ color, focused }) => (
             <Ionicons
-              name={focused ? "play-circle" : "play-circle-outline"}
+              name={focused ? "play" : "play-outline"}
               size={24}
               color={color}
             />

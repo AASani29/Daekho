@@ -1,12 +1,13 @@
-import React, { createContext, useContext, useEffect, useState } from "react";
 import {
-  User,
-  onAuthStateChanged,
-  signInWithEmailAndPassword,
-  createUserWithEmailAndPassword,
-  signOut,
+    User,
+    createUserWithEmailAndPassword,
+    onAuthStateChanged,
+    signInWithEmailAndPassword,
+    signOut,
 } from "firebase/auth";
+import React, { createContext, useContext, useEffect, useState } from "react";
 import { auth } from "../config/firebase";
+import { UserService } from "../services/userService";
 
 interface AuthContextType {
   user: User | null;
@@ -66,6 +67,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
         password
       );
       console.log("AuthContext: Sign up successful:", result.user.email);
+      // Create user profile document
+      await UserService.createUserProfile(result.user.uid, email);
     } catch (error) {
       console.error("AuthContext: Sign up error:", error);
       throw error;

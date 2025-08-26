@@ -83,10 +83,10 @@ export class UserService {
   static async addWatchedMovie(userId: string, movieId: number, rating?: number): Promise<void> {
     try {
       const userRef = doc(firestore, this.USERS_COLLECTION, userId);
-      await updateDoc(userRef, {
+      await setDoc(userRef, {
         watchedMovies: arrayUnion(movieId),
         lastUpdated: new Date(),
-      });
+      }, { merge: true });
 
       // Also store detailed watch data
       const watchedMovieRef = doc(firestore, this.WATCHED_MOVIES_COLLECTION, `${userId}_${movieId}`);
@@ -107,10 +107,10 @@ export class UserService {
   static async addLikedMovie(userId: string, movieId: number): Promise<void> {
     try {
       const userRef = doc(firestore, this.USERS_COLLECTION, userId);
-      await updateDoc(userRef, {
+      await setDoc(userRef, {
         likedMovies: arrayUnion(movieId),
         lastUpdated: new Date(),
-      });
+      }, { merge: true });
     } catch (error) {
       console.error('Error adding liked movie:', error);
       throw error;
