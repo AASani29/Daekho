@@ -40,23 +40,23 @@ Daekho eliminates the decision fatigue by creating a **personalized movie discov
 Users start with secure sign-up and login functionality.
 
 <div align="center">
-  <img src="screenshots/signup.jpg" alt="Sign Up Screenshot" width="300" style="margin-right: 20px;">
-  <img src="screenshots/login.jpg" alt="Login Screenshot" width="300">
+  <img src="Screenshots/signup.jpg" alt="Sign Up Screenshot" width="300" style="margin-right: 20px;">
+  <img src="Screenshots/login.jpg" alt="Login Screenshot" width="300">
 </div>
 
 ### 2. Genre Selection
 New users choose their favorite movie genres for personalized recommendations.
 
 <div align="center">
-  <img src="screenshots/genre-selection1.jpg" alt="Genre Selection Step 1" width="300" style="margin-right: 20px;">
-  <img src="screenshots/genre-selection.jpg" alt="Genre Selection Step 2" width="300">
+  <img src="Screenshots/genre-selection1.jpg" alt="Genre Selection Step 1" width="300" style="margin-right: 20px;">
+  <img src="Screenshots/genre-selection.jpg" alt="Genre Selection Step 2" width="300">
 </div>
 
 ### 3. Home Screen - Personalized Recommendations
 Your personalized movie feed that solves the "what to watch next" problem.
 
 <div align="center">
-  <img src="screenshots/home.jpg" alt="Home Screen Screenshot" width="350">
+  <img src="Screenshots/home.jpg" alt="Home Screen Screenshot" width="350">
 </div>
 
 **Key Benefits:**
@@ -69,33 +69,33 @@ Your personalized movie feed that solves the "what to watch next" problem.
 Detailed movie information with options to like and mark as watched.
 
 <div align="center">
-  <img src="screenshots/movie-details.jpg" alt="Movie Details Screenshot" width="350">
+  <img src="Screenshots/movie-details.jpg" alt="Movie Details Screenshot" width="350">
 </div>
 
 ### 5. Profile
 View watched movies, liked movies, and recently watched history.
 
 <div align="center">
-  <img src="screenshots/profile.jpg" alt="Profile Screenshot" width="350">
+  <img src="Screenshots/profile.jpg" alt="Profile Screenshot" width="350">
 </div>
 
 ### 6. Discovery Pages
 
 **Now Playing**
 <div align="center">
-  <img src="screenshots/now-playing.jpg" alt="Now Playing Screenshot" width="350">
+  <img src="Screenshots/now-playing.jpg" alt="Now Playing Screenshot" width="350">
 </div>
 
 **Top Rated**
 <div align="center">
-  <img src="screenshots/top-rated.jpg" alt="Top Rated Screenshot" width="350">
+  <img src="Screenshots/top-rated.jpg" alt="Top Rated Screenshot" width="350">
 </div>
 
 ### 7. Search
 Find movies using the search functionality.
 
 <div align="center">
-  <img src="screenshots/search.jpg" alt="Search Screenshot" width="350">
+  <img src="Screenshots/search.jpg" alt="Search Screenshot" width="350">
 </div>
 
 ## Technologies Used
