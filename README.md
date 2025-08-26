@@ -1,10 +1,27 @@
 # Daekho - Movie Recommendation App
 
-A React Native movie discovery app built with Expo that provides personalized movie recommendations based on user preferences and viewing history.
+A React Native movie discovery app built with Expo that solves the problem of endlessly searching for what to watch next by providing truly personalized movie recommendations.
 
-## Overview
+## The Problem We Solve
 
-Daekho helps users discover movies through personalized recommendations. The app learns from user preferences and viewing history to suggest relevant movies while filtering out already-watched content for a better browsing experience.
+**Tired of spending more time searching for movies than actually watching them?**
+
+With thousands of movies available across platforms, finding something you'll actually enjoy has become overwhelming. Users often face:
+- Endless scrolling through generic movie lists
+- Watching the same movies repeatedly because they can't find new ones
+- Wasting time on movies that don't match their taste
+- Difficulty discovering hidden gems in their preferred genres
+
+## Our Solution
+
+Daekho eliminates the decision fatigue by creating a **personalized movie discovery experience**:
+
+- **Smart Genre-Based Filtering** - Get recommendations only from genres you actually enjoy
+- **Intelligent Exclusion System** - Never see movies you've already watched in your recommendations
+- **Preference Learning** - The more you interact, the better your recommendations become
+- **Curated Discovery** - Fresh, relevant suggestions every time you open the app
+
+**Result**: Spend less time searching and more time enjoying movies you'll love.
 
 ## Features
 
@@ -22,41 +39,64 @@ Daekho helps users discover movies through personalized recommendations. The app
 ### 1. Authentication
 Users start with secure sign-up and login functionality.
 
-![Sign Up Screenshot](screenshots/signup.png)
-![Login Screenshot](screenshots/login.png)
+<div align="center">
+  <img src="screenshots/signup.jpg" alt="Sign Up Screenshot" width="300" style="margin-right: 20px;">
+  <img src="screenshots/login.jpg" alt="Login Screenshot" width="300">
+</div>
 
 ### 2. Genre Selection
 New users choose their favorite movie genres for personalized recommendations.
 
-![Genre Selection Screenshot](screenshots/genre-selection.png)
+<div align="center">
+  <img src="screenshots/genre-selection1.jpg" alt="Genre Selection Step 1" width="300" style="margin-right: 20px;">
+  <img src="screenshots/genre-selection.jpg" alt="Genre Selection Step 2" width="300">
+</div>
 
-### 3. Home Screen
-Personalized movie recommendations based on selected genres, excluding already watched movies.
+### 3. Home Screen - Personalized Recommendations
+Your personalized movie feed that solves the "what to watch next" problem.
 
-![Home Screen Screenshot](screenshots/home.png)
+<div align="center">
+  <img src="screenshots/home.jpg" alt="Home Screen Screenshot" width="350">
+</div>
+
+**Key Benefits:**
+- **Zero Decision Fatigue** - Only see movies you're likely to enjoy based on your selected genres
+- **No Repeats** - Watched movies are automatically filtered out, ensuring fresh content every time
+- **Instant Relevance** - Every movie shown matches your taste preferences
+- **Continuous Discovery** - Always find something new without endless searching
 
 ### 4. Movie Details
 Detailed movie information with options to like and mark as watched.
 
-![Movie Details Screenshot](screenshots/movie-details.png)
+<div align="center">
+  <img src="screenshots/movie-details.jpg" alt="Movie Details Screenshot" width="350">
+</div>
 
 ### 5. Profile
 View watched movies, liked movies, and recently watched history.
 
-![Profile Screenshot](screenshots/profile.png)
+<div align="center">
+  <img src="screenshots/profile.jpg" alt="Profile Screenshot" width="350">
+</div>
 
 ### 6. Discovery Pages
 
 **Now Playing**
-![Now Playing Screenshot](screenshots/now-playing.png)
+<div align="center">
+  <img src="screenshots/now-playing.jpg" alt="Now Playing Screenshot" width="350">
+</div>
 
 **Top Rated**
-![Top Rated Screenshot](screenshots/top-rated.png)
+<div align="center">
+  <img src="screenshots/top-rated.jpg" alt="Top Rated Screenshot" width="350">
+</div>
 
 ### 7. Search
 Find movies using the search functionality.
 
-![Search Screenshot](screenshots/search.png)
+<div align="center">
+  <img src="screenshots/search.jpg" alt="Search Screenshot" width="350">
+</div>
 
 ## Technologies Used
 
@@ -118,13 +158,19 @@ Find movies using the search functionality.
    - Scan the QR code with Expo Go app
    - Or run on simulator: `npx expo run:ios` or `npx expo run:android`
 
-## How Recommendations Work
+## How Our Smart Recommendation System Works
 
-1. Users select preferred genres during initial setup
-2. App fetches movies from TMDB API based on selected genres
-3. Users can like movies and mark them as watched
-4. Watched movies are excluded from home screen recommendations
-5. Recommendations stay fresh and relevant based on user preferences
+**The Traditional Problem**: Generic movie lists show everything to everyone, leading to decision paralysis and wasted time.
+
+**Daekho's Approach**:
+
+1. **Initial Preference Capture** - Users select their favorite genres during onboarding
+2. **Smart API Integration** - Fetch movies from TMDB API filtered by user's preferred genres only
+3. **Behavioral Learning** - Track user interactions (likes, watches) to understand taste patterns  
+4. **Intelligent Filtering** - Automatically exclude watched movies from future recommendations
+5. **Continuous Refinement** - Recommendations improve as users engage more with the app
+
+**The Result**: A personalized movie discovery experience where users spend seconds, not minutes, finding their next great movie.
 
 ## Contributing
 
